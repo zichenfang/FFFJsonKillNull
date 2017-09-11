@@ -12,19 +12,12 @@
 -(NSString *)string_ForKey:(NSString *)theKey
 {
     NSString * theNewStr =[NSString stringWithFormat:@"%@",[self objectForKey:theKey]];
-    if ([theNewStr isEqualToString:@"<null>"]) {
-        return @"";
-    }
-    if ([theNewStr isEqualToString:@"<NULL>"]) {
-        return @"";
-    }
-    if ([theNewStr isEqualToString:@"NULL"]) {
-        return @"";
-    }
-    if ([theNewStr isEqualToString:@"null"]) {
-        return @"";
-    }
-    if ([theNewStr isEqualToString:@"(null)"]) {
+    NSString * className =[[NSString stringWithFormat:@"%@",[[self objectForKey:theKey] class]] lowercaseString];
+    if (className ==nil||
+        [className rangeOfString:@"null"].length>0||
+        [className isEqualToString:@"nil"]||
+        [className isEqualToString:@""])
+    {
         return @"";
     }
     return theNewStr;
